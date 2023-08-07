@@ -18,6 +18,85 @@ db.connect((err) => {
   start();
 });
 
+const start = () => {
+  inquirer
+    .prompt({
+      name: "action",
+      type: "list",
+      message: "What would you like to do?",
+      choices: [
+        "View all employees",
+        "View all employees by department",
+        "View all employees by manager",
+        "View all employees by role",
+        "View all roles",
+        "View all departments",
+        "Add an employee",
+        "Add a role",
+        "Add a department",
+        "Update an employee's role",
+        "Update an employee's manager",
+        "Delete an employee",
+        "Delete a role",
+        "Delete a department",
+        "View the total utilized budget of a department",
+        "Exit",
+      ],
+    })
+    .then((answer) => {
+      switch (answer.action) {
+        case "View all employees":
+          viewAllEmployees();
+          break;
+        case "View all employees by department":
+          viewEmployeesByDepartment();
+          break;
+        case "View all employees by manager":
+          viewEmployeesByManager();
+          break;
+        case "View all employees by role":
+          viewEmployeesByRole();
+          break;
+        case "View all roles":
+          viewAllRoles();
+          break;
+        case "View all departments":
+          viewAllDepartments();
+          break;
+        case "Add an employee":
+          addEmployee();
+          break;
+        case "Add a role":
+          addRole();
+          break;
+        case "Add a department":
+          addDepartment();
+          break;
+        case "Update an employee's role":
+          updateEmployeeRole();
+          break;
+        case "Update an employee's manager":
+          updateEmployeeManager();
+          break;
+        case "Delete an employee":
+          deleteEmployee();
+          break;
+        case "Delete a role":
+          deleteRole();
+          break;
+        case "Delete a department":
+          deleteDepartment();
+          break;
+        case "View the total utilized budget of a department":
+          viewBudgetByDepartment();
+          break;
+        case "Exit":
+          exit();
+          break;
+      }
+    });
+};
+
 const viewEmployeesByDepartment = () => {
   db.query(
     `SELECT employee.id, employee.first_name, employee.last_name, department.name AS department
@@ -495,83 +574,4 @@ const viewBudgetByDepartment = () => {
 const exit = () => {
   db.end();
   process.exit();
-};
-
-const start = () => {
-  inquirer
-    .prompt({
-      name: "action",
-      type: "list",
-      message: "What would you like to do?",
-      choices: [
-        "View all employees",
-        "View all employees by department",
-        "View all employees by manager",
-        "View all employees by role",
-        "View all roles",
-        "View all departments",
-        "Add an employee",
-        "Add a role",
-        "Add a department",
-        "Update an employee's role",
-        "Update an employee's manager",
-        "Delete an employee",
-        "Delete a role",
-        "Delete a department",
-        "View the total utilized budget of a department",
-        "Exit",
-      ],
-    })
-    .then((answer) => {
-      switch (answer.action) {
-        case "View all employees":
-          viewAllEmployees();
-          break;
-        case "View all employees by department":
-          viewEmployeesByDepartment();
-          break;
-        case "View all employees by manager":
-          viewEmployeesByManager();
-          break;
-        case "View all employees by role":
-          viewEmployeesByRole();
-          break;
-        case "View all roles":
-          viewAllRoles();
-          break;
-        case "View all departments":
-          viewAllDepartments();
-          break;
-        case "Add an employee":
-          addEmployee();
-          break;
-        case "Add a role":
-          addRole();
-          break;
-        case "Add a department":
-          addDepartment();
-          break;
-        case "Update an employee's role":
-          updateEmployeeRole();
-          break;
-        case "Update an employee's manager":
-          updateEmployeeManager();
-          break;
-        case "Delete an employee":
-          deleteEmployee();
-          break;
-        case "Delete a role":
-          deleteRole();
-          break;
-        case "Delete a department":
-          deleteDepartment();
-          break;
-        case "View the total utilized budget of a department":
-          viewBudgetByDepartment();
-          break;
-        case "Exit":
-          exit();
-          break;
-      }
-    });
 };
